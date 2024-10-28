@@ -1,7 +1,7 @@
 public class EmployeeBook {
-    private Employee[] employees = new Employee[10];
+    private final Employee[] employees = new Employee[10];
     private int pointer = 0;
-    private int idCounter = 0;
+
 
     public void printAllEmployees() {
         for (int i = 0; i < pointer; i++) {
@@ -13,8 +13,7 @@ public class EmployeeBook {
         if (employees.length == pointer) {
             return false;
         } else {
-            employees[pointer] = new Employee(fullName, department, salary, idCounter);
-            idCounter++;
+            employees[pointer] = new Employee(fullName, department, salary);
             pointer++;
             return true;
         }
@@ -43,7 +42,7 @@ public class EmployeeBook {
     }
 
     public double getTotalSalaries() {
-        double sum = 0;
+        double sum = 0.0;
         for (int i = 0; i < pointer; i++) {
             sum += employees[i].getSalary();
         }
@@ -91,9 +90,10 @@ public class EmployeeBook {
     }
 
     public Employee getEmployeeWithMinimalSalaryInDepartment(int department) {
-        Employee nullEmployee = new Employee("Null", -1, Double.MAX_VALUE, -1);
-        for (int i = 1; i < pointer; i++) {
-            if (employees[i].getDepartment() == department && employees[i].getSalary() < nullEmployee.getSalary()) {
+        Employee nullEmployee = null;
+        for (int i = 0; i < pointer; i++) {
+            if (employees[i].getDepartment() == department &&
+                    (nullEmployee == null || employees[i].getSalary() < nullEmployee.getSalary())) {
                 nullEmployee = employees[i];
             }
         }
@@ -101,9 +101,10 @@ public class EmployeeBook {
     }
 
     public Employee getEmployeeWithMaximalSalaryInDepartment(int department) {
-        Employee nullEmployee = new Employee("Null", -1, Double.MIN_VALUE, -1);
-        for (int i = 1; i < pointer; i++) {
-            if (employees[i].getDepartment() == department && employees[i].getSalary() > nullEmployee.getSalary()) {
+        Employee nullEmployee = null;
+        for (int i = 0; i < pointer; i++) {
+            if (employees[i].getDepartment() == department &&
+                    (nullEmployee == null || employees[i].getSalary() > nullEmployee.getSalary())) {
                 nullEmployee = employees[i];
             }
         }
@@ -111,7 +112,7 @@ public class EmployeeBook {
     }
 
     public double getTotalSalariesInDepartment(int department) {
-        double sum = 0;
+        double sum = 0.0;
         for (int i = 0; i < pointer; i++) {
             if (employees[i].getDepartment() == department) {
                 sum += employees[i].getSalary();
@@ -121,7 +122,7 @@ public class EmployeeBook {
     }
 
     public double getAverageSalaryInDepartment(int department) {
-        double sum = 0;
+        double sum = 0.0;
         int departmentCounter = 0;
         for (int i = 0; i < pointer; i++) {
             if (employees[i].getDepartment() == department) {
@@ -147,7 +148,7 @@ public class EmployeeBook {
     public void printAllEmployeesInDepartment(int department) {
         for (int i = 0; i < pointer; i++) {
             if (employees[i].getDepartment() == department) {
-                System.out.println(employees[i].printEmployeeWithoutDepartment());
+                System.out.println(employees[i].toStringEmployeeWithoutDepartment());
             }
         }
     }
@@ -155,7 +156,7 @@ public class EmployeeBook {
     public void printEmployeesWithSalaryLessThan(double exampleSalary) {
         for (int i = 0; i < pointer; i++) {
             if (employees[i].getSalary() < exampleSalary) {
-                System.out.println(employees[i].printEmployeeWithoutDepartment());
+                System.out.println(employees[i].toStringEmployeeWithoutDepartment());
             }
         }
     }
@@ -163,7 +164,7 @@ public class EmployeeBook {
     public void printEmployeesWithSalaryMoreThan(double exampleSalary) {
         for (int i = 0; i < pointer; i++) {
             if (employees[i].getSalary() >= exampleSalary) {
-                System.out.println(employees[i].printEmployeeWithoutDepartment());
+                System.out.println(employees[i].toStringEmployeeWithoutDepartment());
             }
         }
     }
