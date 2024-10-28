@@ -1,16 +1,19 @@
 import java.util.Objects;
 
 public class Employee {
+    private int id;
     private String fullName;
     private int department;
     private double salary;
-    private int id;
 
-    public Employee(String fullName, int department, double salary, int id) {
+    private static int idCounter = 0;
+
+    public Employee(String fullName, int department, double salary) {
         this.fullName = fullName;
         this.department = department;
         this.salary = salary;
-        this.id = id;
+        this.id = idCounter;
+        idCounter++;
     }
 
     public String getFullName() {
@@ -27,6 +30,10 @@ public class Employee {
 
     public int getId() {
         return id;
+    }
+
+    public static int getIdCounter() {
+        return idCounter;
     }
 
     public void setFullName(String fullName) {
@@ -55,16 +62,16 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return department == employee.department && salary == employee.salary && id == employee.id &&
+        return id == employee.id && department == employee.department && salary == employee.salary &&
                 Objects.equals(fullName, employee.fullName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fullName, department, salary, id);
+        return Objects.hash(id, fullName, department, salary);
     }
 
-    public String printEmployeeWithoutDepartment() {
+    public String toStringEmployeeWithoutDepartment() {
         return "id: " + id + ", full name: " + fullName + ", salary: " + salary;
     }
 }
